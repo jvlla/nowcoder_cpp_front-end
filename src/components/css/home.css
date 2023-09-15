@@ -1,0 +1,50 @@
+.site-layout-content {
+  min-height: 280px;
+  padding: 24px;
+  background: #fff;
+}
+  
+.ant-layout-header {
+  background-color: white;
+}
+
+#components-layout-demo-top{
+  min-height:100%;
+}
+
+#components-layout-demo-top .logo {
+  height: 50%;
+  vertical-align: middle;
+  margin-bottom: 5px;
+}
+
+#components-layout-demo-top .footerInfo {
+  /* border-left: 1px solid #666;
+  padding-left: 10px; */
+  text-align: left;
+  color: #666;
+}
+
+.loginButton{
+  border-radius: 9px;
+  float: right;
+  margin-top: 19px;
+  background-color: #32ca99;
+}
+
+#components-layout-demo-top #nav ul {
+  text-align: left;
+  list-style-type: none;
+  align-items: end;
+}
+
+#components-layout-demo-top #nav li {
+  display: inline;
+  float: left;
+}
+
+#components-layout-demo-top #nav a {
+  color: #666;
+  text-decoration: none;
+  padding: 20px 20px;
+}

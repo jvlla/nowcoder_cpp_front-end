@@ -1,10 +1,15 @@
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
+import GeneralLayout from "./components/GeneralLayout";
+import Home from "./pages/home";
 
 function App() {
   return (
-    <>
-      <h1>初始页面</h1>
-    </>
+    <GeneralLayout>
+      <Routes>
+        <Route path="" element={<Home />} />
+      </Routes>
+    </GeneralLayout>
   );
 }
 

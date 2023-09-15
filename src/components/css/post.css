@@ -1,0 +1,18 @@
+.post {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 25px;
+    background-color: white;
+  }
+  
+  .postCol {
+    height: 120px;
+    margin-top: 10px;
+  }
+  
+  .postLi {
+    display: inline;
+    font-size: 16px;
+  }
