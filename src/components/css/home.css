@@ -15,7 +15,7 @@
 #components-layout-demo-top .logo {
   height: 50%;
   vertical-align: middle;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 #components-layout-demo-top .footerInfo {
@@ -48,3 +48,8 @@
   text-decoration: none;
   padding: 20px 20px;
 }
+
+/* 翻页的颜色，回头再说 */
+/* .ant-pagination-item-active a{
+  color: #32ca99;
+} */

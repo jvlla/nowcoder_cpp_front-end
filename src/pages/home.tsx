@@ -1,27 +1,45 @@
 /*
  * 主页
  */
-import React from "react";
-import { Row, Col, Pagination } from "antd";
-import Post from "../components/post";
-import '../components/css/home.css'
+import { useEffect, useState } from "react";
+import { Row, Col, Pagination, FloatButton, message } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import { Post, PostProps } from "../components/post";
+import "../components/css/home.css";
+import { loadDataAPI } from "../services/post";
 
 function Home() {
+  const [query, setQuery] = useState({}); // 查询条件
+  const [postsTotal, setPostsTotal] = useState(0); // 帖子总数
+  const [data, setData] = useState<PostProps[]>([]); // 帖子数据
+  const turnPage = (page: number, pageSize: number) => {
+    // 翻页函数
+    setQuery({
+      ...query,
+      page,
+    });
+    console.log(page);
+  };
+
+  useEffect(() => {
+    loadDataAPI(query).then((res) => {
+      console.log(res.data);
+      setData(res.data.posts);
+      setPostsTotal(res.data.postsTotal);
+    });
+  }, [query]); // 监听query改变
+
   return (
     <>
-      {/* 先直接造两个帖子，之后再改成变量 */}
-      <Row>
-        {/* Row的gutter实际是使用padding实现的，所以要搞成圆角就不能用gutter，直接设置margin */}
-        <Col span={16} offset={4} className="post">
-          <Post avatarSrc="" title="标题" comment="评论" />
-        </Col>
-      </Row>
-      <Row>
-        <Col span={16} offset={4} className="post">
-          <Post avatarSrc="" title="标题" comment="评论" />
-        </Col>
-      </Row>
-
+      {/* 帖子 */}
+      {data.map((post, index) => (
+        <Row key={index}>
+          {/* Row的gutter实际是使用padding实现的，所以要搞成圆角就不能用gutter，直接设置margin */}
+          <Col span={16} offset={4} className="post">
+            <Post {...post} />
+          </Col>
+        </Row>
+      ))}
       {/* 页码 */}
       <Row>
         <Col
@@ -35,9 +53,22 @@ function Home() {
             height: "50px",
           }}
         >
-          <Pagination defaultCurrent={1} total={50} />
+          <Pagination
+            defaultCurrent={1}
+            showSizeChanger={false}
+            total={postsTotal}
+            onChange={turnPage}
+          />
         </Col>
       </Row>
+      <FloatButton
+        icon={<PlusOutlined />}
+        type="primary"
+        style={{ height: "50px", width: "50px" }}
+        onClick={() => {
+          message.info("发帖还没实现呢，哭");
+        }}
+      />
     </>
   );
 }

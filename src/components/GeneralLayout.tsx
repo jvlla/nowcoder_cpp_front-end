@@ -1,7 +1,19 @@
 /*
  * 默认布局，除注册登录外都要使用
  */
-import { Layout, Space, Row, Col, MenuProps, Input, Button } from "antd";
+import {
+  Layout,
+  Space,
+  Row,
+  Col,
+  MenuProps,
+  Input,
+  Button,
+  Dropdown,
+  Badge,
+  Avatar,
+} from "antd";
+import { UserOutlined } from "@ant-design/icons";
 import { logo } from "../utils/tools";
 
 // 布局
@@ -47,20 +59,20 @@ const GeneralLayout = ({ children }: any) => (
             style={{
               width: 150,
               float: "right",
-              marginTop: "19px",
+              marginTop: "17px",
             }}
           />
         </Col>
         {/* 头像或登录注册按钮 */}
         <Col span={2}>
-          {/* <Dropdown menu={{ items }}>
+          <Dropdown menu={{ items }}>
             <Space style={{ float: "right" }}>
               <Badge count={10}>
                 <Avatar size={32} icon={<UserOutlined />} />
               </Badge>
             </Space>
-          </Dropdown> */}
-          <Button className="loginButton">登录/注册</Button>
+          </Dropdown>
+          {/* <Button className="loginButton">登录/注册</Button> */}
         </Col>
       </Row>
     </Header>

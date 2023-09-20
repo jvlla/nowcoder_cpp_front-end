@@ -1,14 +1,14 @@
 {
-  "name": "nowcoder_front-end",
+  "name": "test_nc",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "server": "vite --port 8080"
+    "front": "vite --port 8080"
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
-    "antd": "^4.24.14",
+    "antd": "^5.9.2",
     "axios": "^1.5.0",
     "nprogress": "^0.2.0",
     "react": "^18.2.0",
@@ -16,10 +16,15 @@
     "react-router-dom": "^6.16.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.24",
-    "@types/react-dom": "^18.0.8",
-    "@vitejs/plugin-react": "^2.2.0",
-    "typescript": "^4.6.4",
-    "vite": "^3.2.3"
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react": "^4.0.3",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
   }
 }
