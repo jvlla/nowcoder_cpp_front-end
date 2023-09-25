@@ -2,11 +2,10 @@ import axios from 'axios';
 // @ts-ignore
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-// import { getToken, serverUrl } from './tools';
 import { serverUrl } from './tools';
 
 const instance = axios.create({
-  baseURL: serverUrl, // 请求的基础地址
+  baseURL: serverUrl + 'api/', // 请求的基础api地址
   timeout: 5000,
   withCredentials: true,
 });

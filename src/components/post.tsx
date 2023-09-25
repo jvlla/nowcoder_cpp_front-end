@@ -16,6 +16,8 @@ type PostProps = {
   likeCount: number;
 };
 
+const parser = new DOMParser(); // 用于对帖子标题和内容进行转义
+
 const Post = (props: PostProps) => {
   return (
     <Row>
@@ -27,12 +29,20 @@ const Post = (props: PostProps) => {
         {/* 帖子标题 */}
         <Row>
           <Col style={{ fontSize: "18px", fontWeight: "bold" }}>
-            {props.title}
+            {
+              parser.parseFromString(props.title, "text/html").documentElement
+                .textContent
+            }
           </Col>
         </Row>
         {/* 帖子内容 */}
         <Row style={{ margin: "10px 0px 0px 0px" }}>
-          <div className="postContent">{props.content}</div>
+          <div className="postContent">
+            {
+              parser.parseFromString(props.content, "text/html").documentElement
+                .textContent
+            }
+          </div>
         </Row>
         <Divider style={{ margin: "2px 0px 10px 0px" }} />
         {/* 帖子信息 */}

@@ -5,13 +5,14 @@ import { useEffect, useState } from "react";
 import { Row, Col, Pagination, FloatButton, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { Post, PostProps } from "../components/post";
-import "../components/css/home.css";
 import { loadDataAPI } from "../services/post";
+import "../components/css/home.css";
 
 function Home() {
   const [query, setQuery] = useState({}); // 查询条件
   const [postsTotal, setPostsTotal] = useState(0); // 帖子总数
   const [data, setData] = useState<PostProps[]>([]); // 帖子数据
+
   const turnPage = (page: number, pageSize: number) => {
     // 翻页函数
     setQuery({
@@ -22,10 +23,11 @@ function Home() {
   };
 
   useEffect(() => {
+    // 加载帖子内容
     loadDataAPI(query).then((res) => {
-      console.log(res.data);
-      setData(res.data.posts);
-      setPostsTotal(res.data.postsTotal);
+      console.log(res);
+      setData(res.data);
+      setPostsTotal(res.total);
     });
   }, [query]); // 监听query改变
 
