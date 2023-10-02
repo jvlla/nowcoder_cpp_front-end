@@ -1,120 +1,123 @@
-import { Row, Col, Card, Form, Input, Button, message } from "antd";
+/**
+ * 登录子页面
+ */
+import { Row, Col, Form, Input, Button, message, Checkbox } from "antd";
 import { useNavigate } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
-import { loginAPI, captchaAPI } from "../services/user";
-import { logo, sleep } from "../utils/tools";
-import { useState } from "react";
+import { loginAPI, captchaAPI, getUserAPI } from "../services/user";
+import { sleep } from "../utils/tools";
+import { useContext, useState } from "react";
+import { context } from "../components/AppContext";
 
 function Login() {
-  const [isVarified, setIsVarified] = useState(false);
+  const { setUser } = useContext(context);
+  const [isVarified, setIsVarified] = useState(false);  // 是否使用谷歌captcha标志，为真隐藏验证
   const navigate = useNavigate();
 
-  function doVerity(ticket: string) {
-    console.log("here");
+  // 验证captcha函数，展示是否验证成功
+  function doVerity(ticket: any) {
     if (!isVarified) {
-      sleep(1000).then(() => {
-        setIsVarified(true);
-        var ret = { ticket: ticket};
-        captchaAPI(ret).then((res) => {
-          if (res.success) {
-            message.success(res.message);
-          } else {
-            message.error(res.message);
-          }
-        });
+      setIsVarified(true);
+      var ret = { ticket: ticket };
+      captchaAPI(ret).then((res) => {
+        if (res.success) {
+          message.success(res.message);
+        } else {
+          message.error(res.message);
+        }
       });
     }
   }
 
   return (
-    <Row>
-      <Col
-        md={{
-          span: 8,
-          push: 8,
-        }}
-        xs={{
-          span: 22,
-          push: 1,
-        }}
+    <Form
+      labelCol={{
+        md: {
+          span: 4,
+        },
+      }}
+      initialValues={{
+        rememberMe: false,
+      }}
+      onFinish={async (v) => {
+        console.log(v);
+        const res = await loginAPI(v);
+        console.log(res);
+        if (res.success) {
+          message.success(res.message);
+          sleep(500).then(() => {
+            navigate("/");
+            // 重新获取登录用户
+            getUserAPI().then((res) => {
+              console.log(res.user);
+              setUser(res.user);
+            });
+          });
+        } else {
+          message.error(res.message);
+        }
+      }}
+    >
+      <Form.Item
+        label="用户名"
+        name="username"
+        rules={[
+          {
+            required: true,
+            message: "请输入用户名",
+          },
+        ]}
       >
-        <img
-          src={logo}
-          style={{
-            display: "block",
-            margin: "20px auto",
-            borderRadius: "16px",
-            width: "200px",
-          }}
-        />
-        <Card title="C++版牛客论坛登录" style={{ textAlign: "center" }}>
-          <Form
-            labelCol={{
-              md: {
-                span: 4,
-              },
-            }}
-            onFinish={async (v) => {
-              console.log(v);
-              const res = await loginAPI(v);
-              console.log(res);
-              if (res.success) {
-                message.success(res.message);
-                sleep(500).then(() => {
-                  navigate("/");
-                });
-              } else {
-                message.error(res.message);
-              }
+        <Input placeholder="请输入用户名" />
+      </Form.Item>
+      <Form.Item
+        label="密码"
+        name="password"
+        rules={[
+          {
+            required: true,
+            message: "请输入密码",
+          },
+        ]}
+      >
+        <Input.Password placeholder="请输入密码" />
+      </Form.Item>
+      <Row>
+        <Col offset={4}>
+          <Form.Item style={{ display: "inline-flex" }}>
+            <Button
+              htmlType="submit"
+              type="primary"
+              style={{
+                display: "block",
+                margin: "",
+              }}
+            >
+              登录
+            </Button>
+          </Form.Item>
+        </Col>
+        <Col offset={1}>
+          <Form.Item
+            name="rememberMe"
+            valuePropName="checked"
+            style={{
+              display: "inline-flex",
             }}
           >
-            <Form.Item
-              label="用户名"
-              name="username"
-              rules={[
-                {
-                  required: true,
-                  message: "请输入用户名",
-                },
-              ]}
-            >
-              <Input placeholder="请输入用户名" />
-            </Form.Item>
-            <Form.Item
-              label="密码"
-              name="password"
-              rules={[
-                {
-                  required: true,
-                  message: "请输入密码",
-                },
-              ]}
-            >
-              <Input.Password placeholder="请输入密码" />
-            </Form.Item>
-            <Form.Item>
-              <Button
-                htmlType="submit"
-                type="primary"
-                style={{
-                  display: "block",
-                  margin: "8px auto",
-                  width: "20vw",
-                }}
-              >
-                登录
-              </Button>
-              <div hidden={isVarified}>
-                <ReCAPTCHA
-                  sitekey="6LfY_0EoAAAAANyIkFtnTGxsJJFFpvjV1J7s082r"
-                  onChange={doVerity}
-                />
-              </div>
-            </Form.Item>
-          </Form>
-        </Card>
-      </Col>
-    </Row>
+            <Checkbox>记住我</Checkbox>
+          </Form.Item>
+        </Col>
+        <Col offset={4}>
+          <div hidden={isVarified}>
+            <ReCAPTCHA
+              sitekey="6LfY_0EoAAAAANyIkFtnTGxsJJFFpvjV1J7s082r"
+              onChange={doVerity}
+            />
+          </div>
+        </Col>
+      </Row>
+    </Form>
   );
 }
 

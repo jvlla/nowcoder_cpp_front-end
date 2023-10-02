@@ -3,6 +3,8 @@
  */
 import { Space, MenuProps, Button, Dropdown, Badge, Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import { useId } from "react";
 
 export type RightHeaderProps = {
   userId: number;
@@ -11,19 +13,21 @@ export type RightHeaderProps = {
 }
 
 export const RightHeader = (user: RightHeaderProps) => {
+  const navigate = useNavigate();
+
   // header中dropdown组件菜单选项，之后记得改网址
   var items: MenuProps["items"] = [
     {
       key: "1",
-      label: <a href="https://www.antgroup.com">消息通知</a>,
+      label: <a href="https://www.antgroup.com">消息查看</a>,
     },
     {
       key: "2",
-      label: <a href="https://www.aliyun.com">系统通知</a>,
+      label: <a href="/user/setting">账号设置</a>,
     },
     {
       key: "3",
-      label: <a href="https://www.luohanacademy.com">退出登录</a>,
+      label: <a href="/api/logout">退出登录</a>,
     },
     {
       key: "4",
@@ -43,13 +47,16 @@ export const RightHeader = (user: RightHeaderProps) => {
                 size={32}
                 icon={<UserOutlined />}
                 src={user.userHeaderURL}
+                onClick={()=>{
+                  navigate("/user/" + user.userId)
+                }}
               />
             </Badge>
           </Space>
         </Dropdown>
       </div>
       <div hidden={user.userId != 0}>
-        <Button className="loginButton">登录/注册</Button>
+        <Button className="loginButton" onClick={() => {navigate("/login");}}>登录/注册</Button>
       </div>
     </>
   );

@@ -1,0 +1,10 @@
+.headerImage {
+    width: 120px;
+    min-width: 120px;
+    height: 120px;
+    min-height: 120px;
+    border: dashed;
+    border-color: grey;
+    border-width: 1px;
+    border-radius: 5%;
+}

@@ -1,4 +1,5 @@
 import logoImage from "../assets/logo.png";
+export const defaultImg = logoImage;
 
 /*
  * 牛客图标
@@ -18,3 +19,19 @@ export function sleep(time: number) {
     setTimeout(resolve, time);
   });
 }
+
+/**
+ * 图片处理
+ * @param img
+ * @returns
+ */
+export const dalImg = (img: string) => {
+  if (img) {
+    if (img.startsWith('http')) return img;
+    return serverUrl + img;
+  }
+  return defaultImg;
+};
+
+export const uploadActionUrl = serverUrl + '/api/upload/header';
+

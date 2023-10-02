@@ -3,9 +3,11 @@
  */
 import { Layout, Space, Row, Col, Input } from "antd";
 import { logo } from "../utils/tools";
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { getUserAPI } from "../services/user";
-import { RightHeader, RightHeaderProps } from "./RightHeader";
+import { RightHeader } from "./RightHeader";
+import { context } from "./AppContext";
+import "./css/generalLayout.css"
 
 // 布局
 const { Header, Content, Footer } = Layout;
@@ -13,14 +15,10 @@ const { Header, Content, Footer } = Layout;
 const { Search } = Input;
 
 const GeneralLayout = ({ children }: any) => {
-  const [user, setUser] = useState<RightHeaderProps>({
-    userId: 0,
-    username: "",
-    userHeaderURL: "",
-  });
+  const {user, setUser} = useContext(context);
 
+  // 默认先获得当前用户
   useEffect(() => {
-    // 获取登录用户信息，但这个还有不足，不刷新页面这个是不会变的，在别的页面换人登录了怎么办……先凑合吧-------------------------
     getUserAPI().then((res) => {
       console.log(res.user);
       setUser(res.user);
@@ -61,7 +59,8 @@ const GeneralLayout = ({ children }: any) => {
         </Row>
       </Header>
       {/* 这个min-height是权宜之计，让footer不满一屏的时候也能呆在最下面 */}
-      <Content style={{ minHeight: "68.7vh" }}>{children}</Content>
+      {/* <Content style={{ minHeight: "68.7vh" }}>{children}</Content> */}
+      <Content>{children}</Content>
       <Footer style={{ textAlign: "center", backgroundColor: "black" }}>
         <Row>
           <Col span={4} offset={4}>
