@@ -2,7 +2,7 @@ import ReactDOM from "react-dom/client";
 import zhCN from "antd/lib/locale/zh_CN";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ConfigProvider, theme } from "antd";
-import AppProvider from "./components/AppContext";
+import AppProvider from "./components/appContext";
 import App from "./App";
 import "./index.css";
 

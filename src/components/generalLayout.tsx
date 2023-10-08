@@ -5,8 +5,8 @@ import { Layout, Space, Row, Col, Input } from "antd";
 import { logo } from "../utils/tools";
 import { useContext, useEffect } from "react";
 import { getUserAPI } from "../services/user";
-import { RightHeader } from "./RightHeader";
-import { context } from "./AppContext";
+import { RightHeader } from "./rightHeader";
+import { context } from "./appContext";
 import "./css/generalLayout.css"
 
 // 布局

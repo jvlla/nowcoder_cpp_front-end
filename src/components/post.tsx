@@ -9,9 +9,10 @@ import "./css/post.css";
 type PostProps = {
   username: string;
   userHeaderURL: string;
+  postId: number;
   title: string;
   content: string;
-  postRecord: string; // 帖子发表时间
+  postRecord: string;  // 帖子发表时间
   commentCount: number;
   likeCount: number;
 };
@@ -29,10 +30,12 @@ const Post = (props: PostProps) => {
         {/* 帖子标题 */}
         <Row>
           <Col style={{ fontSize: "18px", fontWeight: "bold" }}>
-            {
-              parser.parseFromString(props.title, "text/html").documentElement
-                .textContent
-            }
+            <a href={"/detail/" + props.postId} style={{color: "black"}}>
+              {
+                parser.parseFromString(props.title, "text/html").documentElement
+                  .textContent
+              }
+            </a>
           </Col>
         </Row>
         {/* 帖子内容 */}

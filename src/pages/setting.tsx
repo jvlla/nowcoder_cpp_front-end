@@ -4,7 +4,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Row, Col, Card, Button, message, Divider, Upload } from "antd";
 import { getUserAPI, uploadHeader } from "../services/user";
-import { context } from "../components/AppContext";
+import { context } from "../components/appContext";
 import "../components/css/setting.css";
 import { useNavigate } from "react-router-dom";
 
@@ -25,8 +25,6 @@ function beforeUpload(file: any) {
   }
   return isJpgOrPng && isLt2M;
 }
-
-
 
 function Setting() {
   const { user, setUser } = useContext(context);

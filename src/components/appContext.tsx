@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { RightHeaderProps } from "./RightHeader";
+import { RightHeaderProps } from "./rightHeader";
 
 export const context = createContext<any>({});
 

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Login from "./login";
 import Register from "./register";
 import { useContext, useEffect, useState } from "react";
-import { context } from "../components/AppContext";
+import { context } from "../components/appContext";
 
 function LoginAndRegister({ children }: any) {
   const {user} = useContext(context);

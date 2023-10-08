@@ -4,7 +4,6 @@
 import { Space, MenuProps, Button, Dropdown, Badge, Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { useId } from "react";
 
 export type RightHeaderProps = {
   userId: number;

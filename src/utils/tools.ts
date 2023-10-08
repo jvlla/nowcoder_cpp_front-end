@@ -1,7 +1,7 @@
 import logoImage from "../assets/logo.png";
 export const defaultImg = logoImage;
 
-/*
+/**
  * 牛客图标
  */
 export const logo = logoImage;
@@ -11,7 +11,7 @@ export const logo = logoImage;
  */
 export const serverUrl = "/";
 
-/*
+/**
  * 休眠函数，延迟执行，提高视觉体验
  */
 export function sleep(time: number) {
@@ -21,17 +21,17 @@ export function sleep(time: number) {
 }
 
 /**
- * 图片处理
- * @param img
- * @returns
+ * 上传图片url
  */
-export const dalImg = (img: string) => {
-  if (img) {
-    if (img.startsWith('http')) return img;
-    return serverUrl + img;
-  }
-  return defaultImg;
-};
-
 export const uploadActionUrl = serverUrl + '/api/upload/header';
+
+/**
+ * 实体类型，帖子 
+ */ 
+export const ENTITY_TYPE_POST = 1;
+
+/**
+ * 实体类型，评论
+ */ 
+export const ENTITY_TYPE_COMMENT = 2;
 

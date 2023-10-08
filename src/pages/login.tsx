@@ -7,7 +7,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { loginAPI, captchaAPI, getUserAPI } from "../services/user";
 import { sleep } from "../utils/tools";
 import { useContext, useState } from "react";
-import { context } from "../components/AppContext";
+import { context } from "../components/appContext";
 
 function Login() {
   const { setUser } = useContext(context);
