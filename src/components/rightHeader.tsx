@@ -1,5 +1,5 @@
 /*
- * 页面中Header的右侧部分
+ * 页面中Header的右侧部分组件
  */
 import { Space, MenuProps, Button, Dropdown, Badge, Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
@@ -18,14 +18,18 @@ export const RightHeader = (user: RightHeaderProps) => {
   var items: MenuProps["items"] = [
     {
       key: "1",
-      label: <a href="https://www.antgroup.com">消息查看</a>,
+      label: <a href="/letter">私信查看</a>,
     },
     {
       key: "2",
-      label: <a href="/user/setting">账号设置</a>,
+      label: <a href="/notice">消息查看</a>,
     },
     {
       key: "3",
+      label: <a href="/user/setting">账号设置</a>,
+    },
+    {
+      key: "4",
       label: <a href="/api/logout">退出登录</a>,
     },
     {

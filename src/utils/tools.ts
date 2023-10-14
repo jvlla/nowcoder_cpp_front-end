@@ -35,3 +35,17 @@ export const ENTITY_TYPE_POST = 1;
  */ 
 export const ENTITY_TYPE_COMMENT = 2;
 
+/**
+ * 主题: 评论
+ */
+export const TOPIC_COMMENT = "comment";
+
+/**
+ * 主题: 点赞
+ */
+export const TOPIC_LIKE = "like";
+
+/**
+ * 主题: 关注
+ */
+export const TOPIC_FOLLOW = "follow";

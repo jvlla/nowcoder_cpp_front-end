@@ -1,11 +1,10 @@
 import { useContext } from "react";
 import { Row, Col, Avatar, Divider, message } from "antd";
 import { CommentOutlined, LikeOutlined, UserOutlined } from "@ant-design/icons";
+import { context } from "./appContext";
 import { Reply, ReplyProps } from "./reply";
 import { ENTITY_TYPE_COMMENT } from "../utils/tools";
 import "./css/comment.css";
-
-import { context } from "./appContext";
 
 type CommentProps = {
   postId: number;
@@ -118,6 +117,9 @@ function Comment({
           </Col>
         </Row>
         {/* 回复 */}
+        <div>
+          {replys.length}
+        </div>
         <Col className="replyCol" hidden={replys.length == 0}>
           {replys.map((reply, index) => (
             <Row key={index}>

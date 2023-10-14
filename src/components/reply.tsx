@@ -1,12 +1,15 @@
+/**
+ * 对于评论comment的回复reply组件
+ */
 import { useContext } from "react";
-import { CommentOutlined, LikeOutlined } from "@ant-design/icons";
 import { Col, Divider, Row, message } from "antd";
+import { CommentOutlined, LikeOutlined } from "@ant-design/icons";
 import { context } from "./appContext";
 import { ENTITY_TYPE_COMMENT } from "../utils/tools";
 
 type ReplyProps = {
   commentId: number;
-  userId: number;  // 发布reply的用户id
+  userId: number; // 发布reply的用户id
   username: string;
   replyUsername: string; // reply回复的用户名
   content: string;
@@ -31,7 +34,7 @@ function Reply({
   setEntityId,
   setTargetId,
 }: ReplyProps) {
-  const { user } = useContext(context);  // 登录用户信息，用于判断可以点赞评论
+  const { user } = useContext(context); // 登录用户信息，用于判断可以点赞评论
 
   // 点赞函数
   function likeReply() {
