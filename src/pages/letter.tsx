@@ -89,6 +89,7 @@ function Letter() {
               <Conversation
                 conversationId={conversation.conversationId}
                 content={conversation.content}
+                targetId={conversation.targetId}
                 targetName={conversation.targetName}
                 targetHeaderUrl={conversation.targetHeaderUrl}
                 letterRecord={conversation.letterRecord}

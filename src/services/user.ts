@@ -64,6 +64,8 @@ export const captchaAPI = (data: any) => post('/login/captcha', data);
  */
 export const getUserAPI = () => get('/user');
 
+export const getUserProfileAPI = (userId: any) =>get('/user/profile/' + userId)
+
 /**
  * captcha验证接口
  * @param data 

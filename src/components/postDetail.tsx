@@ -1,18 +1,22 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Row, Col, Avatar, Divider, message } from "antd";
 import { CommentOutlined, LikeOutlined, UserOutlined } from "@ant-design/icons";
 import { context } from "./appContext";
 import { ENTITY_TYPE_POST } from "../utils/tools";
+import { likeAPI } from "../services/likeAndFollow";
 
 type PostDetailProps = {
   postId: number;
+  userId: number;
   username: string;
   userHeaderURL: string;
   title: string;
   content: string;
   postRecord: string; // 帖子发表时间
   commentCount: number;
-  likeCount: number;
+  likeRawStatus: number;
+  likeRawCount: number;
   setShowModal: any;
   setEntityType: any;
   setEntityId: any;
@@ -23,19 +27,30 @@ const parser = new DOMParser(); // 用于对帖子标题和内容进行转义
 
 function PostDetail({
   postId,
+  userId,
   username,
   userHeaderURL,
   title,
   content,
   postRecord,
   commentCount,
-  likeCount,
+  likeRawCount,
+  likeRawStatus,
   setShowModal,
   setEntityType,
   setEntityId,
   setTargetId,
 }: PostDetailProps) {
   const { user } = useContext(context); // 登录用户信息，用于判断可以点赞评论
+  const [likeStatus, setLikeStatus] = useState(-1); // 点赞状态，1已赞，0未赞
+  const [likeCount, setLikeCount] = useState(-1); // 点赞数量
+  const navigate = useNavigate();
+
+  // 默认设置点赞情况和数量
+  useEffect(() => {
+    setLikeCount(likeRawCount);
+    setLikeStatus(likeRawStatus);
+  }, [user]); // 监听user是因为什么都不写好像起不到作用
 
   // 点赞函数
   function likePost() {
@@ -43,7 +58,16 @@ function PostDetail({
       message.error("点赞请登录");
       return;
     }
-    message.error("点赞还没实现");
+    var data = {
+      entityType: ENTITY_TYPE_POST,
+      entityId: postId,
+      entityUserId: userId,
+    };
+    likeAPI(data).then((res) => {
+      console.log(res);
+      setLikeCount(res.data.likeCount);
+      setLikeStatus(res.data.likeStatus);
+    });
   }
 
   // 评论函数
@@ -63,7 +87,14 @@ function PostDetail({
     <Row>
       {/* 头像 */}
       <Col span={2} className="postCol">
-        <Avatar size={50} icon={<UserOutlined />} src={userHeaderURL} />
+        <Avatar
+          size={50}
+          icon={<UserOutlined />}
+          src={userHeaderURL}
+          onClick={() => {
+            navigate("/user/profile/" + userId);
+          }}
+        />
       </Col>
       <Col span={22} className="postCol">
         {/* 用户名 */}
@@ -95,11 +126,14 @@ function PostDetail({
         {/* 点赞和评论 */}
         <Row>
           <Col span={2}>
-            <div style={{ color: "black" }}>
+            <div style={{ color: likeStatus ? "#00b96b" : "black" }}>
               <LikeOutlined style={{ fontSize: "20px" }} onClick={likePost} />
               <a
                 onClick={likePost}
-                style={{ color: "black", fontSize: "16px" }}
+                style={{
+                  color: likeStatus ? "#00b96b" : "black",
+                  fontSize: "16px",
+                }}
               >
                 {likeCount}
               </a>

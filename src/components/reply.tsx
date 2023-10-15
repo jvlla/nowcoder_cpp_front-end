@@ -1,20 +1,23 @@
 /**
  * 对于评论comment的回复reply组件
  */
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Col, Divider, Row, message } from "antd";
 import { CommentOutlined, LikeOutlined } from "@ant-design/icons";
 import { context } from "./appContext";
 import { ENTITY_TYPE_COMMENT } from "../utils/tools";
+import { likeAPI } from "../services/likeAndFollow";
 
 type ReplyProps = {
-  commentId: number;
+  replyId: number; // reply发表用户id
+  commentId: number; // reply所回复的comment的发表用户
   userId: number; // 发布reply的用户id
   username: string;
   replyUsername: string; // reply回复的用户名
   content: string;
   replyRecord: string; // 回复发表时间
-  likeCount: number;
+  likeRawStatus: number;
+  likeRawCount: number;
   setShowModal: any;
   setEntityType: any;
   setEntityId: any;
@@ -22,19 +25,29 @@ type ReplyProps = {
 };
 
 function Reply({
+  replyId,
   commentId,
   userId,
   username,
   replyUsername,
   content,
   replyRecord,
-  likeCount,
+  likeRawStatus,
+  likeRawCount,
   setShowModal,
   setEntityType,
   setEntityId,
   setTargetId,
 }: ReplyProps) {
   const { user } = useContext(context); // 登录用户信息，用于判断可以点赞评论
+  const [likeStatus, setLikeStatus] = useState(-1); // 点赞状态，1已赞，0未赞
+  const [likeCount, setLikeCount] = useState(-1); // 点赞数量
+
+  // 默认设置点赞情况和数量
+  useEffect(() => {
+    setLikeCount(likeRawCount);
+    setLikeStatus(likeRawStatus);
+  }, [user]); // 监听user是因为什么都不写好像起不到作用
 
   // 点赞函数
   function likeReply() {
@@ -42,7 +55,16 @@ function Reply({
       message.error("点赞请登录");
       return;
     }
-    message.error("点赞还没实现");
+    var data = {
+      entityType: ENTITY_TYPE_COMMENT,
+      entityId: replyId,
+      entityUserId: userId,
+    };
+    likeAPI(data).then((res) => {
+      console.log(res);
+      setLikeCount(res.data.likeCount);
+      setLikeStatus(res.data.likeStatus);
+    });
   }
 
   // 回复回复的函数
@@ -78,10 +100,19 @@ function Reply({
           {/* 点赞和评论 */}
           <Col span={1}>
             <div>
-              <LikeOutlined style={{ fontSize: "16px" }} onClick={likeReply} />
+              <LikeOutlined
+                style={{
+                  color: likeStatus ? "#00b96b" : "black",
+                  fontSize: "16px",
+                }}
+                onClick={likeReply}
+              />
               <a
                 onClick={likeReply}
-                style={{ color: "black", fontSize: "14px" }}
+                style={{
+                  color: likeStatus ? "#00b96b" : "black",
+                  fontSize: "14px",
+                }}
               >
                 {likeCount}
               </a>

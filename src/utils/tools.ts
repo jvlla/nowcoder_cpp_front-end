@@ -36,6 +36,12 @@ export const ENTITY_TYPE_POST = 1;
 export const ENTITY_TYPE_COMMENT = 2;
 
 /**
+ * 实体类型，用户
+ */ 
+export const ENTITY_TYPE_USER = 3;
+
+
+/**
  * 主题: 评论
  */
 export const TOPIC_COMMENT = "comment";

@@ -1,11 +1,14 @@
-import { UserOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 import { Avatar, Badge, Col, Divider, Row } from "antd";
-import { sleep } from "../utils/tools";
+import { UserOutlined } from "@ant-design/icons";
 import { getLettersAPI } from "../services/letter";
+import { sleep } from "../utils/tools";
+
 
 type ConversationProps = {
   conversationId: string;
   content: string;
+  targetId: number;
   targetName: string;
   targetHeaderUrl: string;
   letterRecord: string;
@@ -19,6 +22,7 @@ type ConversationProps = {
 function Conversation({
   conversationId,
   content,
+  targetId,
   targetName,
   targetHeaderUrl,
   letterRecord,
@@ -28,6 +32,8 @@ function Conversation({
   setDetailQuery,
   setConversationData,
 }: ConversationProps) {
+  const navigate = useNavigate();
+
   const changeQuery = () => {
     setConversationId(conversationId);
     setDetailQuery({});
@@ -44,7 +50,9 @@ function Conversation({
       <Row>
         <Col span={5} style={{ margin: "10px 0" }}>
           <Badge count={unreadCount} offset={[-4, 4]}>
-            <Avatar size={50} icon={<UserOutlined />} src={targetHeaderUrl} />
+            <Avatar size={50} icon={<UserOutlined />} src={targetHeaderUrl} onClick={()=>{
+                  navigate("/user/profile/" + targetId)
+                }} />
           </Badge>
         </Col>
         <Col span={19}>

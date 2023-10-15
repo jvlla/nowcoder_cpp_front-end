@@ -15,12 +15,14 @@ function Detail() {
   const [postData, setPostData] = useState<PostDetailProps>({
     username: "",
     userHeaderURL: "",
+    userId: 0,
     postId: 0,
     title: "",
     content: "",
     postRecord: "",
     commentCount: 0,
-    likeCount: 0,
+    likeRawStatus: 0,
+    likeRawCount: 0,
     setShowModal: {},
     setEntityType: {},
     setEntityId: {},
@@ -72,13 +74,15 @@ function Detail() {
         <Col span={16} offset={4} className="post">
           <PostDetail
             postId={Number(postId)}
+            userId={postData.userId}
             username={postData.username}
             userHeaderURL={postData.userHeaderURL}
             title={postData.title}
             content={postData.content}
             postRecord={postData.postRecord}
             commentCount={postData.commentCount}
-            likeCount={postData.likeCount}
+            likeRawStatus={postData.likeRawStatus}
+            likeRawCount={postData.likeRawCount}
             setShowModal={setShowModal}
             setEntityType={setEntityType}
             setEntityId={setEntityId}
@@ -94,12 +98,14 @@ function Detail() {
             <Comment
               postId={Number(postId)}
               commentId={comment.commentId}
+              userId={comment.userId}
               username={comment.username}
               userHeaderURL={comment.userHeaderURL}
               content={comment.content}
               commentRecord={comment.commentRecord}
               commentCount={comment.commentCount}
-              likeCount={comment.likeCount}
+              likeRawStatus={comment.likeRawStatus}
+              likeRawCount={comment.likeRawCount}
               replys={comment.replys}
               setShowModal={setShowModal}
               setEntityType={setEntityType}

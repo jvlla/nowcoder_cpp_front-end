@@ -1,20 +1,24 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Row, Col, Avatar, Divider, message } from "antd";
 import { CommentOutlined, LikeOutlined, UserOutlined } from "@ant-design/icons";
 import { context } from "./appContext";
 import { Reply, ReplyProps } from "./reply";
 import { ENTITY_TYPE_COMMENT } from "../utils/tools";
+import { likeAPI } from "../services/likeAndFollow";
 import "./css/comment.css";
 
 type CommentProps = {
   postId: number;
   commentId: number;
+  userId: number;
   username: string;
   userHeaderURL: string;
   content: string;
   commentRecord: string; // 评论发表时间
   commentCount: number;
-  likeCount: number;
+  likeRawStatus: number;
+  likeRawCount: number;
   replys: ReplyProps[];
   setShowModal: any;
   setEntityType: any;
@@ -26,18 +30,29 @@ const parser = new DOMParser(); // 用于对帖子标题和内容进行转义
 
 function Comment({
   commentId,
+  userId,
   username,
   userHeaderURL,
   content,
   commentRecord,
-  likeCount,
+  likeRawStatus,
+  likeRawCount,
   replys,
   setShowModal,
   setEntityType,
   setEntityId,
   setTargetId,
 }: CommentProps) {
-  const { user } = useContext(context);  // 登录用户信息，用于判断可以点赞评论
+  const { user } = useContext(context); // 登录用户信息，用于判断可以点赞评论
+  const [likeStatus, setLikeStatus] = useState(-1); // 点赞状态，1已赞，0未赞
+  const [likeCount, setLikeCount] = useState(-1); // 点赞数量
+  const navigate = useNavigate();
+
+  // 默认设置点赞情况和数量
+  useEffect(() => {
+    setLikeCount(likeRawCount);
+    setLikeStatus(likeRawStatus);
+  }, [user]); // 监听user是因为什么都不写好像起不到作用
 
   // 点赞函数
   function likeComment() {
@@ -45,9 +60,18 @@ function Comment({
       message.error("点赞请登录");
       return;
     }
-    message.error("点赞还没实现");
+    var data = {
+      entityType: ENTITY_TYPE_COMMENT,
+      entityId: commentId,
+      entityUserId: userId,
+    };
+    likeAPI(data).then((res) => {
+      console.log(res);
+      setLikeCount(res.data.likeCount);
+      setLikeStatus(res.data.likeStatus);
+    });
   }
-  
+
   // 恢复函数
   function postReply() {
     if (user.userId == 0) {
@@ -65,7 +89,14 @@ function Comment({
     <Row>
       {/* 头像 */}
       <Col span={2} className="commentCol">
-          <Avatar size={50} icon={<UserOutlined />} src={userHeaderURL} />
+        <Avatar
+          size={50}
+          icon={<UserOutlined />}
+          src={userHeaderURL}
+          onClick={() => {
+            navigate("/user/profile/" + userId);
+          }}
+        />
       </Col>
       <Col span={22} className="commentCol">
         {/* 用户名 */}
@@ -90,12 +121,18 @@ function Comment({
           <Col span={1}>
             <div>
               <LikeOutlined
-                style={{ fontSize: "16px" }}
+                style={{
+                  color: likeStatus ? "#00b96b" : "black",
+                  fontSize: "16px",
+                }}
                 onClick={likeComment}
               />
               <a
                 onClick={likeComment}
-                style={{ color: "black", fontSize: "14px" }}
+                style={{
+                  color: likeStatus ? "#00b96b" : "black",
+                  fontSize: "14px",
+                }}
               >
                 {likeCount}
               </a>
@@ -117,20 +154,20 @@ function Comment({
           </Col>
         </Row>
         {/* 回复 */}
-        <div>
-          {replys.length}
-        </div>
+        <div>{replys.length}</div>
         <Col className="replyCol" hidden={replys.length == 0}>
           {replys.map((reply, index) => (
             <Row key={index}>
               <Reply
+                replyId={reply.replyId}
                 commentId={reply.commentId}
                 userId={reply.userId}
                 username={reply.username}
                 replyUsername={reply.replyUsername}
                 content={reply.content}
                 replyRecord={reply.replyRecord}
-                likeCount={reply.likeCount}
+                likeRawStatus={reply.likeRawStatus}
+                likeRawCount={reply.likeRawCount}
                 setShowModal={setShowModal}
                 setEntityType={setEntityType}
                 setEntityId={setEntityId}

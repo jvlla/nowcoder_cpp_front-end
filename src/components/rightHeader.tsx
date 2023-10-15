@@ -1,9 +1,9 @@
 /*
  * 页面中Header的右侧部分组件
  */
+import { useNavigate } from "react-router-dom";
 import { Space, MenuProps, Button, Dropdown, Badge, Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
 
 export type RightHeaderProps = {
   userId: number;
@@ -51,7 +51,7 @@ export const RightHeader = (user: RightHeaderProps) => {
                 icon={<UserOutlined />}
                 src={user.userHeaderURL}
                 onClick={()=>{
-                  navigate("/user/" + user.userId)
+                  navigate("/user/profile/" + user.userId)
                 }}
               />
             </Badge>

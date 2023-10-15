@@ -1,13 +1,12 @@
+import { useNavigate } from "react-router-dom";
+import { Avatar, Badge, Col, Divider, Row } from "antd";
 import {
   CommentOutlined,
   HeartOutlined,
   LikeOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Badge, Col, Divider, Row, message } from "antd";
-import { sleep } from "../utils/tools";
-import { getLettersAPI, getNoticesAPI } from "../services/letter";
-import { TOPIC_COMMENT, TOPIC_LIKE, TOPIC_FOLLOW } from "../utils/tools";
+import { getNoticesAPI } from "../services/letter";
+import { sleep, TOPIC_COMMENT, TOPIC_LIKE } from "../utils/tools";
 
 type NoticeListElementProps = {
   type: string;
@@ -30,6 +29,8 @@ function NoticeListElement({
   setDetailQuery,
   setListData,
 }: NoticeListElementProps) {
+  const navigate = useNavigate();
+
   const changeQuery = () => {
     setNoticeType(type);
     setDetailQuery({});
@@ -54,7 +55,7 @@ function NoticeListElement({
                     ? "green"
                     : type == TOPIC_LIKE
                     ? "orange"
-                    : "pink"
+                    : "pink",
               }}
               icon={
                 type == TOPIC_COMMENT ? (
