@@ -8,6 +8,7 @@ function AppProvider({ children }: any) {
     userId: 0,
     username: "",
     userHeaderURL: "",
+    infoCount: 0
   });
 
   return (

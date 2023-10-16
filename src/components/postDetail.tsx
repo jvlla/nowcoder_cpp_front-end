@@ -20,6 +20,7 @@ type PostDetailProps = {
   setShowModal: any;
   setEntityType: any;
   setEntityId: any;
+  setEntityUserId: any;
   setTargetId: any;
 };
 
@@ -39,6 +40,7 @@ function PostDetail({
   setShowModal,
   setEntityType,
   setEntityId,
+  setEntityUserId,
   setTargetId,
 }: PostDetailProps) {
   const { user } = useContext(context); // 登录用户信息，用于判断可以点赞评论
@@ -62,6 +64,7 @@ function PostDetail({
       entityType: ENTITY_TYPE_POST,
       entityId: postId,
       entityUserId: userId,
+      postId: postId
     };
     likeAPI(data).then((res) => {
       console.log(res);
@@ -79,6 +82,7 @@ function PostDetail({
 
     setEntityType(ENTITY_TYPE_POST);
     setEntityId(postId);
+    setEntityUserId(userId);
     setTargetId(0);
     setShowModal(true);
   }

@@ -26,6 +26,7 @@ function Detail() {
     setShowModal: {},
     setEntityType: {},
     setEntityId: {},
+    setEntityUserId: {},
     setTargetId: {},
   }); // 查询条件
   const [commentQuery, setCommentQuery] = useState({}); // 查询条件
@@ -36,6 +37,7 @@ function Detail() {
   const [page, setPage] = useState(0); // 当前页码，用来在回复后再次查询
   const [entityType, setEntityType] = useState(0); // 用户发送回复数据，为被回复的的类型、id和发表用户id
   const [entityId, setEntityId] = useState(0);
+  const [entityUserId, setentityUserId] = useState(0);
   const [targetId, setTargetId] = useState(0);
 
   const turnPage = (page: number, _: number) => {
@@ -86,6 +88,7 @@ function Detail() {
             setShowModal={setShowModal}
             setEntityType={setEntityType}
             setEntityId={setEntityId}
+            setEntityUserId={setentityUserId}
             setTargetId={setTargetId}
           />
         </Col>
@@ -110,6 +113,7 @@ function Detail() {
               setShowModal={setShowModal}
               setEntityType={setEntityType}
               setEntityId={setEntityId}
+              setEntityUserId={setentityUserId}
               setTargetId={setTargetId}
             />
           </Col>
@@ -156,7 +160,9 @@ function Detail() {
               content: v.content,
               entityType: entityType,
               entityId: entityId,
+              entityUserId: entityUserId,
               targetId: targetId,
+              postId: Number(postId)
             };
             console.log(postCommentData);
 

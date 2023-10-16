@@ -1,7 +1,7 @@
 /*
  * 默认布局，全部网页都要使用
  */
-import { Layout, Space, Row, Col, Input } from "antd";
+import { Layout, Space, Row, Col, Input, message } from "antd";
 import { logo } from "../utils/tools";
 import { useContext, useEffect } from "react";
 import { getUserAPI } from "../services/user";

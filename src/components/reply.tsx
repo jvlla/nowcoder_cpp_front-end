@@ -9,6 +9,7 @@ import { ENTITY_TYPE_COMMENT } from "../utils/tools";
 import { likeAPI } from "../services/likeAndFollow";
 
 type ReplyProps = {
+  postId: number; // reply所在帖子的id
   replyId: number; // reply发表用户id
   commentId: number; // reply所回复的comment的发表用户
   userId: number; // 发布reply的用户id
@@ -21,10 +22,12 @@ type ReplyProps = {
   setShowModal: any;
   setEntityType: any;
   setEntityId: any;
+  setEntityUserId: any;
   setTargetId: any;
 };
 
 function Reply({
+  postId,
   replyId,
   commentId,
   userId,
@@ -37,6 +40,7 @@ function Reply({
   setShowModal,
   setEntityType,
   setEntityId,
+  setEntityUserId,
   setTargetId,
 }: ReplyProps) {
   const { user } = useContext(context); // 登录用户信息，用于判断可以点赞评论
@@ -59,6 +63,7 @@ function Reply({
       entityType: ENTITY_TYPE_COMMENT,
       entityId: replyId,
       entityUserId: userId,
+      postId: postId
     };
     likeAPI(data).then((res) => {
       console.log(res);
@@ -76,6 +81,7 @@ function Reply({
 
     setEntityType(ENTITY_TYPE_COMMENT);
     setEntityId(commentId);
+    setEntityUserId(userId);
     setTargetId(userId);
     setShowModal(true);
   }

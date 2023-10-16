@@ -9,6 +9,7 @@ export type RightHeaderProps = {
   userId: number;
   username: string;
   userHeaderURL: string;
+  infoCount: number
 }
 
 export const RightHeader = (user: RightHeaderProps) => {
@@ -45,7 +46,7 @@ export const RightHeader = (user: RightHeaderProps) => {
       <div hidden={user.userId == 0}>
         <Dropdown menu={{ items }}>
           <Space style={{ float: "right" }}>
-            <Badge count={10}>
+            <Badge count={user.infoCount}>
               <Avatar
                 size={32}
                 icon={<UserOutlined />}

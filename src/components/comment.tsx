@@ -23,12 +23,14 @@ type CommentProps = {
   setShowModal: any;
   setEntityType: any;
   setEntityId: any;
+  setEntityUserId: any;
   setTargetId: any;
 };
 
 const parser = new DOMParser(); // 用于对帖子标题和内容进行转义
 
 function Comment({
+  postId,
   commentId,
   userId,
   username,
@@ -41,6 +43,7 @@ function Comment({
   setShowModal,
   setEntityType,
   setEntityId,
+  setEntityUserId,
   setTargetId,
 }: CommentProps) {
   const { user } = useContext(context); // 登录用户信息，用于判断可以点赞评论
@@ -64,6 +67,7 @@ function Comment({
       entityType: ENTITY_TYPE_COMMENT,
       entityId: commentId,
       entityUserId: userId,
+      postId: postId
     };
     likeAPI(data).then((res) => {
       console.log(res);
@@ -82,6 +86,7 @@ function Comment({
     setEntityType(ENTITY_TYPE_COMMENT);
     setEntityId(commentId);
     setTargetId(0);
+    setEntityUserId(userId);
     setShowModal(true);
   }
 
@@ -159,6 +164,7 @@ function Comment({
           {replys.map((reply, index) => (
             <Row key={index}>
               <Reply
+                postId={postId}
                 replyId={reply.replyId}
                 commentId={reply.commentId}
                 userId={reply.userId}
@@ -171,6 +177,7 @@ function Comment({
                 setShowModal={setShowModal}
                 setEntityType={setEntityType}
                 setEntityId={setEntityId}
+                setEntityUserId={setEntityUserId}
                 setTargetId={setTargetId}
               />
             </Row>
